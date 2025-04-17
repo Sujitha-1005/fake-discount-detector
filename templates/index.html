@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Discount Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🕵️ Fake Discount Detector</h1>
+            <p>Spot fraudulent "discounts" in real-time</p>
+        </header>
+        
+        <form action="/detect" method="POST">
+            <div class="input-group">
+                <label for="original_price">Original Price (₹)</label>
+                <input type="number" step="0.01" name="original_price" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="discounted_price">Discounted Price (₹)</label>
+                <input type="number" step="0.01" name="discounted_price" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="days_since_change">Days Since Price Change</label>
+                <input type="number" name="days_since_change" min="1" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="seller_rating">Seller Rating (1-5 ★)</label>
+                <input type="number" name="seller_rating" min="1" max="5" step="0.1" required>
+            </div>
+            
+            <button type="submit">Analyze Discount</button>
+        </form>
+        
+        <div class="info-box">
+            <h3>How it works:</h3>
+            <p>Checks for common scam patterns:</p>
+            <ul>
+                <li>Price ratios over 3:1</li>
+                <li>Recently changed prices</li>
+                <li>Low-rated sellers</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

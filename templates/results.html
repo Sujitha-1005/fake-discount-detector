@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container result-mode">
+        <header>
+            <h1>🔍 Analysis Report</h1>
+            <a href="/" class="back-btn">← New Analysis</a>
+        </header>
+        
+        <div class="price-display">
+            <span class="original-price">₹{{ original_price }}</span>
+            <span class="arrow">→</span>
+            <span class="discounted-price">₹{{ discounted_price }}</span>
+        </div>
+        
+        <div class="verdict {% if is_fake %}fake{% else %}real{% endif %}">
+            {% if is_fake %}
+                <h2>⚠️ Likely Fake Discount ({{ probability }}%)</h2>
+                <p>This matches known scam patterns:</p>
+            {% else %}
+                <h2>✅ Genuine Discount ({{ probability }}% risk)</h2>
+                <p>This appears legitimate:</p>
+            {% endif %}
+        </div>
+        
+        <div class="details">
+            <h3>Key Indicators</h3>
+            <div class="indicators">
+                <div class="indicator">
+                    <span class="label">Price Ratio</span>
+                    <span class="value {{ 'warning' if price_ratio > 3 else 'safe' }}">
+                        {{ price_ratio }}:1
+                    </span>
+                </div>
+                <div class="indicator">
+                    <span class="label">Days Since Change</span>
+                    <span class="value {{ 'warning' if features.days < 3 else 'safe' }}">
+                        {{ features.days }} days
+                    </span>
+                </div>
+                <div class="indicator">
+                    <span class="label">Seller Rating</span>
+                    <span class="value {{ 'warning' if features.rating < 3.5 else 'safe' }}">
+                        {{ features.rating }} ★
+                    </span>
+                </div>
+            </div>
+            
+            <div class="recommendation">
+                <h3>Our Recommendation</h3>
+                {% if is_fake %}
+                    <p>❌ Avoid this seller. The extreme discount ({{ price_ratio }}x) is likely fake.</p>
+                    <p>Report suspicious listings to the platform.</p>
+                {% else %}
+                    <p>✔️ This discount appears legitimate. Enjoy your savings!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
