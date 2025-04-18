@@ -1,12 +1,20 @@
 #!/bin/bash
-echo "Starting build process..."
+set -e  # Exit on error
+
+echo "=== Installing dependencies ==="
+pip install -r requirements.txt
+
+echo "=== Generating data ==="
 python data_generator.py
+
+echo "=== Training model ==="
 python model.py
 
-# Verify model creation
+echo "=== Verification ==="
 if [ -f "model.pkl" ]; then
-    echo "✅ Model created successfully"
+    echo "✅ Model verification passed"
+    python -c "import joblib; print('Model type:', type(joblib.load('model.pkl')))"
 else
-    echo "❌ Model creation failed!"
+    echo "❌ Model file missing!"
     exit 1
 fi
