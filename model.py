@@ -10,4 +10,6 @@ def train_model():
     model = GaussianNB()
     model.fit(X, y)
     
-    joblib.dump(model, 'model.pkl')
+    # Use protocol 4 for wider compatibility
+    joblib.dump(model, 'model.pkl', protocol=4) 
+    print("Model trained and saved successfully!")
